@@ -6,20 +6,13 @@ import {
   Modal,
   Form,
   Alert,
-  Image,
+  Image as BootstrapImage,
   Tab,
   Tabs,
+  Toast,
 } from "react-bootstrap";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import { apiService, Product, Service } from "../../services/api";
-
-type FormDataType = {
-  name: string;
-  description: string;
-  price: number;
-  category: string;
-  image: string;
-};
 
 export function EditPage() {
   const [produtos, setProdutos] = useState<Product[]>([]);
@@ -27,13 +20,14 @@ export function EditPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [showToast, setShowToast] = useState(false); // Estado para controlar o Toast
   const [currentSection, setCurrentSection] = useState<"produtos" | "servicos">(
     "produtos"
   );
   const [currentItem, setCurrentItem] = useState<Product | Service | null>(
     null
   );
-  const [formData, setFormData] = useState<FormDataType>({
+  const [formData, setFormData] = useState({
     name: "",
     description: "",
     price: 0,
@@ -54,6 +48,7 @@ export function EditPage() {
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
         setError(err instanceof Error ? err.message : "Erro desconhecido");
+        setShowToast(true); // Exibe o Toast em caso de erro
       } finally {
         setLoading(false);
       }
@@ -62,41 +57,28 @@ export function EditPage() {
     loadData();
   }, []);
 
-  const handleAddClick = (section: "produtos" | "servicos") => {
-    setCurrentSection(section);
-    setCurrentItem(null);
-    setFormData({ name: "", description: "", price: 0, category: "", image: "" });
-    setShowModal(true);
-  };
-
   const handleSave = async () => {
     try {
       if (currentItem) {
         // Update existing item
         if (currentSection === "produtos") {
-          await apiService.updateProduct(currentItem.id, { ...formData, id: currentItem.id });
+          await apiService.updateProduct(currentItem.id, { ...formData });
           setProdutos((prev) =>
-            prev.map((p) => (p.id === currentItem.id ? { ...p, ...formData, id: currentItem.id } : p))
+            prev.map((p) => (p.id === currentItem.id ? { ...p, ...formData } : p))
           );
         } else {
-          await apiService.updateService(currentItem.id, { ...formData, id: currentItem.id });
+          await apiService.updateService(currentItem.id, { ...formData });
           setServicos((prev) =>
-            prev.map((s) => (s.id === currentItem.id ? { ...s, ...formData, id: currentItem.id } : s))
+            prev.map((s) => (s.id === currentItem.id ? { ...s, ...formData } : s))
           );
         }
       } else {
         // Add new item
         if (currentSection === "produtos") {
-          const newProduct = await apiService.createProduct({
-            ...formData,
-            id: crypto.randomUUID(),
-          });
+          const newProduct = await apiService.createProduct(formData);
           setProdutos((prev) => [...prev, newProduct]);
         } else {
-          const newService = await apiService.createService({
-            ...formData,
-            id: crypto.randomUUID(),
-          });
+          const newService = await apiService.createService(formData);
           setServicos((prev) => [...prev, newService]);
         }
       }
@@ -105,6 +87,7 @@ export function EditPage() {
     } catch (err) {
       console.error("Erro ao salvar item:", err);
       setError(err instanceof Error ? err.message : "Erro desconhecido");
+      setShowToast(true); // Exibe o Toast em caso de erro
     }
   };
 
@@ -120,8 +103,58 @@ export function EditPage() {
     } catch (err) {
       console.error("Erro ao deletar item:", err);
       setError(err instanceof Error ? err.message : "Erro desconhecido");
+      setShowToast(true); // Exibe o Toast em caso de erro
     }
   };
+
+  async function compressImage(file: File, maxWidth: number, maxHeight: number, quality: number): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          if (!ctx) {
+            reject("Erro ao criar contexto do canvas.");
+            return;
+          }
+
+          // Calcula as novas dimensões mantendo a proporção
+          let width = img.width;
+          let height = img.height;
+
+          if (width > maxWidth || height > maxHeight) {
+            if (width > height) {
+              height = (maxHeight / width) * height;
+              width = maxWidth;
+            } else {
+              width = (maxWidth / height) * width;
+              height = maxHeight;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          // Redimensiona a imagem no canvas
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Converte o canvas para base64 com qualidade ajustada
+          const compressedDataUrl = canvas.toDataURL("image/jpeg", quality);
+          resolve(compressedDataUrl);
+        };
+
+        img.onerror = () => reject("Erro ao carregar a imagem.");
+        img.src = event.target?.result as string;
+      };
+
+      reader.onerror = () => reject("Erro ao ler o arquivo.");
+      reader.readAsDataURL(file);
+    });
+  }
 
   if (loading) {
     return (
@@ -131,17 +164,24 @@ export function EditPage() {
     );
   }
 
-  if (error) {
-    return (
-      <Alert variant="danger" className="my-5">
-        {error}
-      </Alert>
-    );
-  }
-
   return (
     <Container>
       <h1 className="text-center my-4">Gerenciar Produtos e Serviços</h1>
+
+      {/* Toast para exibir erros */}
+      <Toast
+        onClose={() => setShowToast(false)}
+        show={showToast}
+        delay={5000}
+        autohide
+        className="position-fixed bottom-0 end-0 m-3 toast-z-index"
+        style={{ zIndex: 1055 }} // Garante que o Toast fique em primeiro plano
+      >
+        <Toast.Header className="bg-danger text-white">
+          <strong className="me-auto">Erro</strong>
+        </Toast.Header>
+        <Toast.Body>{error}</Toast.Body>
+      </Toast>
 
       <Tabs defaultActiveKey="produtos" id="edit-page-tabs" className="mb-3">
         {/* Produtos Tab */}
@@ -153,7 +193,7 @@ export function EditPage() {
                 className="d-flex align-items-center justify-content-between"
               >
                 <div className="d-flex align-items-center">
-                  <Image
+                  <BootstrapImage
                     src={produto.image}
                     rounded
                     style={{ width: 50, height: 50, objectFit: "cover" }}
@@ -163,7 +203,7 @@ export function EditPage() {
                 </div>
                 <div>
                   <Button
-                    variant="warning"
+                    variant="primary"
                     className="me-2"
                     onClick={() => {
                       setCurrentSection("produtos");
@@ -193,7 +233,12 @@ export function EditPage() {
           <Button
             variant="primary"
             className="mt-3"
-            onClick={() => handleAddClick("produtos")}
+            onClick={() => {
+              setCurrentSection("produtos");
+              setCurrentItem(null);
+              setFormData({ name: "", description: "", price: 0, category: "", image: "" });
+              setShowModal(true);
+            }}
           >
             <FaPlus /> Adicionar Produto
           </Button>
@@ -208,7 +253,7 @@ export function EditPage() {
                 className="d-flex align-items-center justify-content-between"
               >
                 <div className="d-flex align-items-center">
-                  <Image
+                  <BootstrapImage
                     src={servico.image}
                     rounded
                     style={{ width: 50, height: 50, objectFit: "cover" }}
@@ -218,7 +263,7 @@ export function EditPage() {
                 </div>
                 <div>
                   <Button
-                    variant="warning"
+                    variant="primary"
                     className="me-2"
                     onClick={() => {
                       setCurrentSection("servicos");
@@ -248,7 +293,12 @@ export function EditPage() {
           <Button
             variant="primary"
             className="mt-3"
-            onClick={() => handleAddClick("servicos")}
+            onClick={() => {
+              setCurrentSection("servicos");
+              setCurrentItem(null);
+              setFormData({ name: "", description: "", price: 0, category: "", image: "" });
+              setShowModal(true);
+            }}
           >
             <FaPlus /> Adicionar Serviço
           </Button>
@@ -307,13 +357,36 @@ export function EditPage() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>URL da Imagem</Form.Label>
+              <Form.Label>Imagem</Form.Label>
               <Form.Control
-                type="text"
-                value={formData.image}
-                onChange={(e) =>
-                  setFormData({ ...formData, image: e.target.value })
-                }
+                type="file"
+                accept="image/*"
+                onChange={async (e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) {
+                    setError("Nenhum arquivo selecionado.");
+                    setShowToast(true);
+                    return;
+                  }
+
+                  // Validação do tamanho do arquivo (exemplo: 5MB)
+                  const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
+                  if (file.size > maxSizeInBytes) {
+                    setError("O arquivo é muito grande. Tamanho máximo permitido: 5MB.");
+                    setShowToast(true);
+                    return;
+                  }
+
+                  try {
+                    // Comprime a imagem antes de salvar
+                    const compressedImage = await compressImage(file, 800, 800, 0.8); // Máximo 800x800px, qualidade 80%
+                    setFormData({ ...formData, image: compressedImage });
+                  } catch (err) {
+                    console.error("Erro ao processar o arquivo:", err);
+                    setError("Erro ao comprimir a imagem. Tente novamente.");
+                    setShowToast(true);
+                  }
+                }}
               />
             </Form.Group>
           </Form>

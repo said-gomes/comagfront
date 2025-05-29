@@ -658,3 +658,7 @@ html {
     }
   }
 }
+
+.toast-z-index {
+  z-index: 1055 !important;
+}
