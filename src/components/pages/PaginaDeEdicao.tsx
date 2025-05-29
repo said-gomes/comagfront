@@ -60,14 +60,13 @@ export function EditPage() {
   const handleSave = async () => {
     try {
       if (currentItem) {
-        // Update existing item
         if (currentSection === "produtos") {
-          await apiService.updateProduct(currentItem.id, { ...formData });
+          await apiService.updateProduct(currentItem.id, { ...formData, id: currentItem.id });
           setProdutos((prev) =>
             prev.map((p) => (p.id === currentItem.id ? { ...p, ...formData } : p))
           );
         } else {
-          await apiService.updateService(currentItem.id, { ...formData });
+          await apiService.updateService(currentItem.id, { ...formData, id: currentItem.id });
           setServicos((prev) =>
             prev.map((s) => (s.id === currentItem.id ? { ...s, ...formData } : s))
           );
@@ -75,10 +74,10 @@ export function EditPage() {
       } else {
         // Add new item
         if (currentSection === "produtos") {
-          const newProduct = await apiService.createProduct(formData);
+          const newProduct = await apiService.createProduct({ ...formData, id: crypto.randomUUID() });
           setProdutos((prev) => [...prev, newProduct]);
         } else {
-          const newService = await apiService.createService(formData);
+          const newService = await apiService.createService({ ...formData, id: crypto.randomUUID() });
           setServicos((prev) => [...prev, newService]);
         }
       }
@@ -362,7 +361,7 @@ export function EditPage() {
                 type="file"
                 accept="image/*"
                 onChange={async (e) => {
-                  const file = e.target.files?.[0];
+                  const file = (e.target as HTMLInputElement).files?.[0];
                   if (!file) {
                     setError("Nenhum arquivo selecionado.");
                     setShowToast(true);
