@@ -1,0 +1,217 @@
+ {
+  "Header": {
+    "title": "COMAG Compressores",
+    "paragraph": "Compressores a pistão, lavadoras, redes de ar e mais."
+  },
+
+    "Sobre": {
+      "paragraph": "Desde a sua fundação em 2002, a COMAG tem se especializado em oferecer soluções no varejo de compressores e na manutenção de equipamentos de ar comprimido. Com a missão de proporcionar um atendimento de excelência, seguimos investindo e aprimorando nossos serviços até nos tornarmos assistência autorizada da Schulz Compressores, líder de mercado. Assim, garantimos um atendimento de alta qualidade e um suporte pós-venda que atende às necessidades de quem nos busca. O compromisso com a satisfação do cliente é máxima para nós, por isso oferecemos condições de pagamento acessíveis, sempre buscando condições que se ajustem a nossos clientes, garantindo as melhores opções para seu orçamento.",
+      "images": [
+        {
+          "title": "Sobre a Empresa",
+          "largeImage": "img/about/comag_claro.svg",
+          "smallImage": "img/about/comag_claro.svg"
+        },
+        {
+          "title": "Sobre a Empresa 2",
+          "largeImage": "img/about/schulz.png",
+          "smallImage": "img/about/schulz.png"
+        }
+      ]
+
+    },
+
+	 "Contato": {
+    "address": "4321 California St, San Francisco, CA 12345 ",
+    "phone": "+1 123 456 1234",
+    "email": "info@company.com",
+    "facebook": "fb.com",
+    "twitter": "twitter.com",
+    "youtube": "youtube.com"
+  },
+
+    "ServicosHome": [
+      {
+        "icon": "faToolbox",
+        "title": "Manutenção de Compressores: Preventiva e Corretiva",
+        "text": "Garantimos o perfeito funcionamento do seu compressor com serviços de manutenção preventiva e corretiva, aumentando sua vida útil e evitando paradas inesperadas."
+      },
+      {
+        "icon": "faHammer",
+        "title": "Assistência Técnica Autorizada Schulz",
+        "text": "Somos assistência técnica autorizada Schulz, com peças originais e profissionais especializados para garantir a máxima performance e segurança dos seus compressores."
+      },
+      {
+        "icon": "faWind",
+        "title": "Instalação de Redes de Ar e Tubulações",
+        "text": "Projetamos e instalamos redes de ar comprimido e tubulações com eficiência e segurança, adequadas às necessidades da sua empresa e conforme as normas técnicas."
+      },
+      {
+        "icon": "faHeadset",
+        "title": "Suporte Técnico Remoto Especializado",
+        "text": "Conte com nossa equipe para suporte técnico remoto, orientação rápida e eficaz para resolver dúvidas, ajustes ou problemas no seu sistema de ar comprimido."
+      }
+    ],
+  
+  "Duvidas": [
+    {
+      "title": "1. O que a COMAG oferece?",
+      "conteudo":"A COMAG se especializa no varejo de compressores e na manutenção de equipamentos de ar comprimido. Além disso, somos assistência técnica autorizada da Schulz Compressores, garantindo serviços de alta qualidade e suporte pós-venda especializado."
+    },
+    {
+      "title": "2. A COMAG é assistência autorizada? Como posso verificar essa informação?",
+      "conteudo":"Sim, somos assistência técnica autorizada da Schulz Compressores, líder de mercado. Isso nos permite oferecer atendimento técnico especializado e peças originais, assegurando a confiabilidade e a durabilidade dos equipamentos. Essa informação pode ser conferida na seguinte página: https://www.schulz.com.br/local/ce/fortaleza/. Busque por MARIA CONSUELO DA SILVA BARBOSA – ME, razão social (nome jurídico) da empresa"
+    },
+    {
+      "title": "3. Como é o atendimento da COMAG?",
+      "conteudo":"Nosso atendimento é pautado pela excelência e pelo compromisso com a satisfação do cliente. Investimos constantemente no aprimoramento dos serviços para oferecer soluções eficientes e suporte pós-venda de qualidade."
+    },
+    {
+      "title": "4. Posso utilizar meu compressor/lavadora como forma de pagamento?",
+      "conteudo":"Sim, aceitamos compressores antigos como parte do pagamento na compra de novos equipamentos. Essa é uma forma de facilitar a troca e modernização do seu sistema de ar comprimido, sempre com uma avaliação justa do equipamento usado."
+    }
+    ,
+    {
+      "title": "5. A COMAG realiza instalação dos compressores?",
+      "conteudo":"Sim! Contamos com equipes especializadas para realizar a instalação de compressores. Em determinadas condições de compra, oferecemos esse serviço de forma gratuita, garantindo que o equipamento funcione corretamente e com total segurança."
+    }
+    ,
+    {
+      "title": "6. Quais são as vantagens de comprar um compressor novo com a COMAG?",
+      "conteudo":"Além de contar com produtos de alta qualidade e assistência autorizada Schulz, você pode aproveitar a possibilidade de utilizar seu compressor antigo como entrada, condições de pagamento facilitadas, instalação gratuita (em casos específicos) e um suporte técnico completo."
+    }
+  ],
+  "Team": [
+    {
+      "img": "img/team/01.png",
+      "name": "Ecofor",
+      "job": ""
+    },
+    {
+      "img": "img/team/02.png",
+      "name": "Colégio Christus",
+      "job": ""
+    },
+    {
+      "img": "img/team/03.png",
+      "name": "Regence Renault",
+      "job": ""
+    },
+    {
+      "img": "img/team/04.png",
+      "name": "Cimento Apodi",
+      "job": ""
+    }
+  ],
+"Servicos": [
+  {
+    "image": "tubulacoes.jpg",
+    "name": "Venda de Tubulações",
+    "text": "Oferecemos tubos industriais de alta qualidade para aplicações em ar comprimido, hidráulica e mais."
+  },
+  {
+    "image": "assessoria.jpg",
+    "name": "Assessoria Técnica",
+    "text": "Especialistas prontos para orientar projetos e instalações com eficiência e segurança."
+  },
+  {
+    "image": "instalacao-redes-ar.jpg",
+    "name": "Instalação de Redes de Ar",
+    "text": "Projetamos e instalamos redes de ar comprimido para máximo desempenho e economia."
+  },
+  {
+    "image": "manutencao-bombas.jpg",
+    "name": "Manutenção de Bombas",
+    "text": "Serviços completos de manutenção preventiva e corretiva em bombas industriais."
+  },
+  {
+    "image": "pecas-compressores.jpg",
+    "name": "Peças para Compressores",
+    "text": "Distribuímos peças originais e compatíveis para os principais modelos de compressores."
+  }
+],
+"Footer": {
+    "title": "COMAG",
+    "subtitle": "Soluções em Ar Comprimido Desde 2002",
+    "text": "Lorem ipsum dolor sit amet placerat facilisis felis mi in tempus eleifend pellentesque natoque etiam."
+},
+"Testemunhos": [
+    {
+      "img": "img/testimonials/01.png",
+      "text": "Ótimo atendimento e excelentes preços.",
+      "name": "Paulo Miranda"
+    },
+    {
+      "img": "img/testimonials/02.png",
+      "text": "Honestidade nos serviços",
+      "name": "Defenza Blindagens"
+    },
+    {
+      "img": "img/testimonials/03.png",
+      "text": "Precisou de peças para compressores!? Lá não falta. Fui atendido por pessoas muito boas e que sabem fazer negocio!",
+      "name": "Thiago Marinho"
+    },
+    {
+      "img": "img/testimonials/04.png",
+      "text": "Excelente atendimento e serviço profissional. Todas as peças que precisei encontrei aqui. Preço justo.",
+      "name": "NITEK Engenharia"
+    },
+    {
+      "img": "img/testimonials/05.png",
+      "text": "Excelente atendimento, profissionais top.",
+      "name": "Rogério Martins"
+    },
+    {
+      "img": "img/testimonials/06.png",
+      "text": "Atendimento excelente. Vendedora muito atenciosa. Resolveram meu problema rapidamente.",
+      "name": "Brauno Alves"
+    }
+  ],
+  "Gallery": [
+    {
+      "title": "CSI 6,6 Pratiko",
+      "largeImage": "img/portfolio/01-large.png",
+      "smallImage": "img/portfolio/01-small.png"
+    },
+    {
+      "title": "PRO CSV 10",
+      "largeImage": "img/portfolio/02-large.png",
+      "smallImage": "img/portfolio/02-small.png"
+    },
+    {
+      "title": "AUDAZ MCSV 20",
+      "largeImage": "img/portfolio/03-large.png",
+      "smallImage": "img/portfolio/03-small.png"
+    },
+    {
+      "title": "BRAVO CSL 15",
+      "largeImage": "img/portfolio/04-large.png",
+      "smallImage": "img/portfolio/04-small.png"
+    },
+    {
+      "title": "MAX MSV 20",
+      "largeImage": "img/portfolio/05-large.png",
+      "smallImage": "img/portfolio/05-small.png"
+    },
+    {
+      "title": "BRAVO CSL 20",
+      "largeImage": "img/portfolio/06-large.png",
+      "smallImage": "img/portfolio/06-small.png"
+    },
+    {
+      "title": "FORT MSWV 60",
+      "largeImage": "img/portfolio/07-large.png",
+      "smallImage": "img/portfolio/07-small.png"
+    },
+    {
+      "title": "SOMAR LUS LAVADORA",
+      "largeImage": "img/portfolio/08-large.png",
+      "smallImage": "img/portfolio/08-small.png"
+    },
+    {
+      "title": "SOMAR HU LAVADORA",
+      "largeImage": "img/portfolio/09-large.png",
+      "smallImage": "img/portfolio/09-small.png"
+    }
+  ]
+}
