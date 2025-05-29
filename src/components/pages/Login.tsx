@@ -1,20 +1,31 @@
 import React, { useContext, useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import { AuthContext } from '../../context/Authcontext';
+import { AuthContext } from "../../context/Authcontext";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
+import { jwtDecode } from "jwt-decode"; // Import jwtDecode to validate the token
 
 export function Login() {
-  const [loginData, setLoginData] = useState({ username: "", password: "" });
+  const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const auth = useContext(AuthContext);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await axios.post("/api/auth/login", loginData);
-      auth?.login(response.data.token);
+      const token = response.data.token;
+      try {
+        const decoded = jwtDecode(token); // Decode the token to check its validity
+        auth?.login(token); // Pass the token to AuthContext
+        console.log("Token stored in AuthContext:", token);
+        navigate("/edicao"); // Navigate to /edicao if the token is valid
+      } catch (err) {
+        setError("Token inválido.");
+      }
     } catch (err) {
-      setError("Login ou senha inválidos.");
+      setError("Email ou senha inválidos.");
     }
   };
 
@@ -39,14 +50,14 @@ export function Login() {
         <Row className="justify-content-center">
           <Col md={6}>
             <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3" controlId="formLogin">
-                <Form.Label>Login</Form.Label>
+              <Form.Group className="mb-3" controlId="formEmail">
+                <Form.Label>Email</Form.Label>
                 <Form.Control
-                  type="text"
-                  placeholder="Digite seu login"
-                  value={loginData.username}
+                  type="email"
+                  placeholder="Digite seu email"
+                  value={loginData.email}
                   onChange={(e) =>
-                    setLoginData({ ...loginData, username: e.target.value })
+                    setLoginData({ ...loginData, email: e.target.value })
                   }
                   required
                 />

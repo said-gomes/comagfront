@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 interface AuthContextType {
   user: any;
@@ -13,7 +12,6 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<any>(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -28,17 +26,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = (token: string) => {
-    localStorage.setItem("token", token);
-    const decoded = jwtDecode(token);
-    setUser(decoded);
-    navigate("/");
+    try {
+      const decoded = jwtDecode(token); // Decode and validate the token
+      setUser(decoded);
+      localStorage.setItem("token", token); // Store the token
+    } catch {
+      logout(); // If token is invalid, log out
+    }
   };
 
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
-    navigate("/login");
   };
+
 
   return (
     <AuthContext.Provider value={{ user, login, logout, isAuthenticated: !!user }}>
