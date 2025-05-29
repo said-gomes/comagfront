@@ -4,6 +4,7 @@ import { AuthContext } from "./Authcontext";
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const auth = useContext(AuthContext);
+  console.log("ProtectedRoute, isAuthenticated:", auth?.isAuthenticated, "user:", auth?.user);
 
   if (!auth?.isAuthenticated) {
     return <Navigate to="/login" />;
